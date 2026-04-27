@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aether-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aether-api
+  template:
+    metadata:
+      labels:
+        app: aether-api
+    spec:
+      containers:
+      - name: aether-api
+        image: aether-api:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: aether-config
