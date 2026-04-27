@@ -1,0 +1,125 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: aether-postgres-shard-1
+spec:
+  serviceName: "postgres-shard-1"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-shard-1
+  template:
+    metadata:
+      labels:
+        app: postgres-shard-1
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        env:
+        - name: POSTGRES_USER
+          value: aether
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: aether-secrets
+              key: database-password
+        - name: POSTGRES_DB
+          value: aether
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: aether-postgres-shard-2
+spec:
+  serviceName: "postgres-shard-2"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-shard-2
+  template:
+    metadata:
+      labels:
+        app: postgres-shard-2
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        env:
+        - name: POSTGRES_USER
+          value: aether
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: aether-secrets
+              key: database-password
+        - name: POSTGRES_DB
+          value: aether
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: aether-postgres-shard-3
+spec:
+  serviceName: "postgres-shard-3"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-shard-3
+  template:
+    metadata:
+      labels:
+        app: postgres-shard-3
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        env:
+        - name: POSTGRES_USER
+          value: aether
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: aether-secrets
+              key: database-password
+        - name: POSTGRES_DB
+          value: aether
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi

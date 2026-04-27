@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aether-worker
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aether-worker
+  template:
+    metadata:
+      labels:
+        app: aether-worker
+    spec:
+      containers:
+      - name: aether-worker
+        image: aether-worker:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8081
+        envFrom:
+        - configMapRef:
+            name: aether-config

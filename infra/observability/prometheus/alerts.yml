@@ -1,0 +1,11 @@
+groups:
+  - name: aether_alerts
+    rules:
+      - alert: HighDLQQueueSize
+        expr: aether_dlq_size > 100
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High DLQ Queue Size"
+          description: "Dead Letter Queue has more than 100 tasks."

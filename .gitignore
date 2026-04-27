@@ -1,12 +1,37 @@
-/target
+### --- General --- ###
+.DS_Store
 .env
-
-/idea
-/vscode
-/logs
-
-
+.env.local
+.env.docker
 *.log
-*.bin
-*.exe
+dist/
+build/
 
+### --- Rust (Cargo) --- ###
+/target/
+**/*.rs.bk
+
+### --- Frontend (Node.js/Next.js) --- ###
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.vercel
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+### --- Infrastructure & Docker --- ###
+**/data/
+infra/postgres/data/
+infra/redis/data/
+infra/kafka/data/
+infra/observability/*/data/
+
+### --- IDE & Editors --- ###
+.vscode/
+.idea/
+*.swp
+*.swo
+
+### --- OS Specific --- ###
+Thumbs.db
